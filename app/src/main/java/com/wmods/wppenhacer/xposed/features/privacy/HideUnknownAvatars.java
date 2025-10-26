@@ -41,8 +41,6 @@ public class HideUnknownAvatars extends Feature {
         XposedBridge.hookMethod(onChangeStatus, new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                if (!prefs.getBoolean("block_unknown_avatars", false)) return;
-
                 var viewHolder = field1.get(param.thisObject);
                 if (viewHolder == null) return;
 
@@ -55,12 +53,14 @@ public class HideUnknownAvatars extends Feature {
                 var jidField = ReflectionUtils.getFieldByExtendType(data.getClass(), jidClass);
                 if (jidField == null) return;
 
+                jidField.setAccessible(true);
                 var jidObject = jidField.get(data);
+                if (jidObject == null) return;
+
                 var rawJid = WppCore.getRawString(jidObject);
                 if (TextUtils.isEmpty(rawJid) || WppCore.isGroup(rawJid)) return;
 
-                var savedName = WppCore.getSContactName(jidObject, true);
-                if (!TextUtils.isEmpty(savedName)) return;
+                if (!Utils.shouldMaskUnknownAvatar(prefs, jidObject)) return;
 
                 var avatarView = findAvatarView(rootView);
                 if (avatarView == null) return;

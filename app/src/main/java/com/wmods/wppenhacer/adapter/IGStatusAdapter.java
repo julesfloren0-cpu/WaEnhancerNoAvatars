@@ -173,10 +173,8 @@ public class IGStatusAdapter extends ArrayAdapter {
             var contactName = WppCore.getContactName(userJid);
             jid = WppCore.getRawString(userJid);
             igStatusContactName.setText(contactName);
-            boolean blockUnknownAvatars = Utils.xprefs != null && Utils.xprefs.getBoolean("block_unknown_avatars", false);
-            boolean isUnknownContact = TextUtils.isEmpty(WppCore.getSContactName(userJid, true));
             Drawable profile = null;
-            if (!blockUnknownAvatars || !isUnknownContact) {
+            if (!Utils.shouldMaskUnknownAvatar(userJid)) {
                 profile = WppCore.getContactPhotoDrawable(jid);
             }
             if (profile == null) profile = DesignUtils.getDrawableByName("avatar_contact");
