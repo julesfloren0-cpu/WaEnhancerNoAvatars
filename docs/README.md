@@ -143,6 +143,54 @@
 4. Install the WaEnhancer APK.
 5. Enable the WaEnhancer module in the Xposed Installer app.
 
+## Building on Android with Termux
+If you do not have access to a desktop environment you can build the module directly on your rooted
+phone by using [Termux](https://f-droid.org/en/packages/com.termux/). The steps below download the
+source code, compile the APK, and move it to shared storage so you can install it.
+
+1. Install Termux from F-Droid (Google Play builds are outdated) and open the app.
+2. Update the package index and install the required build tools:
+   ```bash
+   pkg update && pkg upgrade
+   pkg install git openjdk-17 zip unzip wget
+   ```
+3. Grant Termux access to shared storage so you can copy the generated APK later:
+   ```bash
+   termux-setup-storage
+   ```
+4. Clone your fork (or this repository) and enter the project directory:
+   ```bash
+   git clone https://github.com/Dev4Mod/WaEnhancer.git
+   cd WaEnhancer
+   ```
+5. Ensure the Gradle wrapper is executable and start the release build:
+   ```bash
+   chmod +x gradlew
+   ./gradlew assembleRelease
+
+   > ℹ️  If your environment blocks outbound HTTPS downloads (common on
+   > corporate proxies or sandboxed CI runners), opt into the system-wide
+   > Gradle installation by prefixing the command with
+   > `GRADLEW_USE_SYSTEM=true`. The wrapper script will then execute the
+   > locally installed `gradle` binary instead of attempting to fetch a new
+   > distribution:
+   >
+   > ```bash
+   > GRADLEW_USE_SYSTEM=true ./gradlew assembleRelease
+   > ```
+   ```
+   The download of Gradle and the Android build tools can take several minutes on first run. If the
+   process is killed due to low memory, close other apps and rerun the command.
+6. Copy the generated APK to the shared downloads folder and install it:
+   ```bash
+   cp app/build/outputs/apk/release/app-release.apk ~/storage/downloads/WaEnhancer-release.apk
+   ```
+   You can now install the APK via the Android file manager or with `pm install --user 0
+   ~/storage/downloads/WaEnhancer-release.apk` from Termux.
+
+After the module is installed, enable it inside LSPosed/EdXposed and reboot your device so the hooks
+are applied.
+
 ## Support
 If you encounter any issues or have questions about WaEnhancer, please [Visit Telegram](https://t.me/waenhancer).
 

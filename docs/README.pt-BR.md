@@ -140,7 +140,55 @@
 2. Instale o Xposed Framework (recomendamos [este](https://github.com/JingMatrix/LSPosed) LSPosed) no seu dispositivo.
 3. Baixe o WaEnhancer na aba [Actions](https://github.com/Dev4Mod/WaEnhancer/actions).
 4. Instale o APK do WaEnhancer.
-5. Ative o módulo WaEnhancer no aplicativo Xposed Installer(LSPosed).
+5. Ative o módulo WaEnhancer no aplicativo Xposed Installer (LSPosed).
+
+## Compilando no Android com Termux
+Caso não tenha acesso a um computador, é possível compilar o módulo diretamente no seu telefone com
+root usando o [Termux](https://f-droid.org/en/packages/com.termux/). As etapas abaixo realizam o
+download do código-fonte, compilam o APK e movem o arquivo para o armazenamento compartilhado para
+instalação.
+
+1. Instale o Termux pela F-Droid (as versões da Play Store estão desatualizadas) e abra o app.
+2. Atualize o índice de pacotes e instale as ferramentas necessárias:
+   ```bash
+   pkg update && pkg upgrade
+   pkg install git openjdk-17 zip unzip wget
+   ```
+3. Conceda acesso ao armazenamento compartilhado para copiar o APK gerado:
+   ```bash
+   termux-setup-storage
+   ```
+4. Clone o seu fork (ou este repositório) e acesse o diretório do projeto:
+   ```bash
+   git clone https://github.com/Dev4Mod/WaEnhancer.git
+   cd WaEnhancer
+   ```
+5. Garanta que o Gradle Wrapper seja executável e inicie a compilação de release:
+   ```bash
+   chmod +x gradlew
+   ./gradlew assembleRelease
+
+   > ℹ️  Se o seu ambiente bloquear downloads HTTPS externos (comum em
+   > proxies corporativos ou CIs sandboxed), utilize a instalação local do
+   > Gradle prefixando o comando com `GRADLEW_USE_SYSTEM=true`. O script do
+   > wrapper executará o binário `gradle` já disponível em vez de tentar baixar
+   > uma nova distribuição:
+   >
+   > ```bash
+   > GRADLEW_USE_SYSTEM=true ./gradlew assembleRelease
+   > ```
+   ```
+   O download do Gradle e das ferramentas do Android pode levar alguns minutos na primeira execução.
+   Caso o processo seja encerrado por falta de memória, feche outros aplicativos e execute o comando
+   novamente.
+6. Copie o APK gerado para a pasta de downloads e instale-o:
+   ```bash
+   cp app/build/outputs/apk/release/app-release.apk ~/storage/downloads/WaEnhancer-release.apk
+   ```
+   Você pode instalar o APK pelo gerenciador de arquivos do Android ou com `pm install --user 0
+   ~/storage/downloads/WaEnhancer-release.apk` diretamente no Termux.
+
+Após instalar o módulo, ative-o no LSPosed/EdXposed e reinicie o aparelho para aplicar os hooks.
 
 ## Suporte
 Se você encontrar algum problema ou tiver dúvidas sobre o WaEnhancer, por favor [Visite o Telegram](https://t.me/waenhancer).

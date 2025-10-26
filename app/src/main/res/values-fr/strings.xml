@@ -68,6 +68,8 @@
     <string name="call_blocker_sum">Bloquer les appels WhatsApp en fonction du type de confidentialité</string>
     <string name="show_online_dot_in_conversation_list">Show online dot in Conversation List</string>
     <string name="show_online_dot_in_conversation_list_sum">Afficher un point vert en ligne sur l\'écran d\'accueil\n(REMARQUE : vous devez activer l\'affichage en ligne pour tout le monde dans le menu Paramètres de confidentialité de WhatsApp)</string>
+    <string name="block_unknown_avatars">Masquer les avatars inconnus</string>
+    <string name="block_unknown_avatars_sum">Affiche un avatar générique pour les numéros non enregistrés dans les discussions et les statuts</string>
     <string name="show_dnd_button">Afficher le bouton ne pas déranger</string>
     <string name="show_dnd_button_sum">Enable button to DND Mode in Toolbar</string>
     <string name="dev4mod">Dev4Mod (Contributeur)</string>

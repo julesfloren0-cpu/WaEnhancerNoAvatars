@@ -64,6 +64,12 @@
             app:title="@string/show_online_last_seen_in_conversation_list" />
 
         <rikka.material.preference.MaterialSwitchPreference
+            app:defaultValue="false"
+            app:key="block_unknown_avatars"
+            app:summary="@string/block_unknown_avatars_sum"
+            app:title="@string/block_unknown_avatars" />
+
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="filterseen"
             app:summary="@string/enable_filter_chats_sum"
             app:title="@string/enable_filter_chats" />

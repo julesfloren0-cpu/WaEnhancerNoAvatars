@@ -132,6 +132,43 @@ public class Utils {
             return -1;
         }
     }
+
+    public static boolean isUnknownContact(Object jidObject) {
+        if (jidObject == null) {
+            return false;
+        }
+        try {
+            return TextUtils.isEmpty(WppCore.getSContactName(jidObject, true));
+        } catch (Throwable ignored) {
+            return false;
+        }
+    }
+
+    public static boolean isBlockUnknownAvatarsEnabled(XSharedPreferences preferences) {
+        if (preferences == null) {
+            return false;
+        }
+        try {
+            preferences.reload();
+        } catch (Throwable ignored) {
+        }
+        return preferences.getBoolean("block_unknown_avatars", false);
+    }
+
+    public static boolean isBlockUnknownAvatarsEnabled() {
+        return isBlockUnknownAvatarsEnabled(xprefs);
+    }
+
+    public static boolean shouldMaskUnknownAvatar(XSharedPreferences preferences, Object jidObject) {
+        if (!isBlockUnknownAvatarsEnabled(preferences)) {
+            return false;
+        }
+        return isUnknownContact(jidObject);
+    }
+
+    public static boolean shouldMaskUnknownAvatar(Object jidObject) {
+        return shouldMaskUnknownAvatar(xprefs, jidObject);
+    }
     public static int dipToPixels(float dipValue) {
         DisplayMetrics metrics = FeatureLoader.mApp.getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);

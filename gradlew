@@ -43,6 +43,19 @@ cd "$SAVED" >/dev/null
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
+# Allow opting into the system-wide Gradle installation when the wrapper
+# cannot download distributions (for example on CI environments without
+# external network access). The fallback is enabled only when the caller sets
+# the GRADLEW_USE_SYSTEM environment variable.
+if [ "${GRADLEW_USE_SYSTEM:-}" = "true" ]; then
+    if command -v gradle >/dev/null 2>&1; then
+        exec gradle "$@"
+    else
+        warn "GRADLEW_USE_SYSTEM is enabled but no 'gradle' executable was found on PATH."
+        warn "Falling back to the wrapper bootstrap."
+    fi
+fi
+
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 

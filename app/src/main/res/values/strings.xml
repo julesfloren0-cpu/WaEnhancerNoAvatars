@@ -70,6 +70,8 @@
     <string name="call_blocker_sum">Block WhatsApp calls based on privacy type</string>
     <string name="show_online_dot_in_conversation_list">Show Online Dot in Conversation List</string>
     <string name="show_online_dot_in_conversation_list_sum">Show a green online dot on home screen\n(NOTE: Must activate show online for everyone in WhatsApp\'s Privacy Settings menu)</string>
+    <string name="block_unknown_avatars">Hide Unknown Avatars</string>
+    <string name="block_unknown_avatars_sum">Show a placeholder avatar for unsaved numbers across chats and status updates</string>
     <string name="show_dnd_button">Show DND Button</string>
     <string name="show_dnd_button_sum">Show button for DND Mode on home screen toolbar</string>
     <string name="dev4mod">Dev4Mod (Contributor)</string>
